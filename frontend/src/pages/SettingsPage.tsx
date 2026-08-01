@@ -125,7 +125,7 @@ export function SettingsPage() {
       </SettingsSection>
 
       {/* Password */}
-      {user?.password !== undefined && (
+      {user && (
         <SettingsSection title="SECURITY" icon={Lock}>
           <div className="space-y-4">
             {['currentPassword', 'newPassword', 'confirmPassword'].map(field => (
