@@ -40,11 +40,20 @@ app.use(helmet());
 app.use(mongoSanitize());
 
 // CORS
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://humanoperatingsys.netlify.app",
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // Rate Limiting
